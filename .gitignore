@@ -1,0 +1,5 @@
+*.pem
+*.xml
+data.json
+.vscode
+syncthing-map.html
