@@ -3,8 +3,10 @@ package main
 import (
 	"io"
 	"os"
+	"time"
 
-	"github.com/integrii/flaggy"
+	"github.com/rs/zerolog/log"
+	"github.com/urfave/cli/v2"
 )
 
 type Device struct {
@@ -40,33 +42,56 @@ func readFile(filename string) (content []byte, err error) {
 }
 
 func main() {
-	// parse command line for actions
-	flaggy.SetName("syncthing-map")
-	flaggy.SetDescription("map syncthing devices and folders")
-	flaggy.DefaultParser.ShowHelpOnUnexpected = true
-	// read config file & hostname
-	readSub := flaggy.NewSubcommand("read")
-	var hostname string
-	var configFile string
-	readSub.Description = "read config file"
-	readSub.String(&hostname, "d", "device", "hostname for the config file")
-	readSub.String(&configFile, "f", "file", "XML config file")
-	flaggy.AttachSubcommand(readSub, 1)
-	// create graph
-	graphSub := flaggy.NewSubcommand("graph")
-	flaggy.AttachSubcommand(graphSub, 2)
-	// clean up
-	cleanSub := flaggy.NewSubcommand("clean")
-	flaggy.AttachSubcommand(cleanSub, 3)
-	// parse the command line
-	flaggy.Parse()
-	if readSub.Used {
-		readConfigXml(hostname, configFile)
-	} else if graphSub.Used {
-		writeGraph()
-	} else if cleanSub.Used {
-		//
-	} else {
-		flaggy.ShowHelpAndExit("🛑 missing command")
+
+	app := &cli.App{
+		Name:     "syncthing-map",
+		Version:  "alpha",
+		Compiled: time.Now(),
+		Authors: []*cli.Author{
+			{
+				Name:  "wsw70",
+				Email: "1345886+wsw70@users.noreply.github.com",
+			},
+		},
+		Copyright: "WTFPL http://www.wtfpl.net/",
+		Commands: []*cli.Command{
+			{
+				Name:    "add",
+				Aliases: []string{"a"},
+				Usage:   "add a new config file",
+				Action: func(cCtx *cli.Context) error {
+					if cCtx.String("device") == "" || cCtx.String("file") == "" {
+						cli.ShowAppHelpAndExit(cCtx, 1)
+					}
+					readConfigXml(cCtx.String("device"), cCtx.String("file"))
+					return nil
+				},
+				Flags: []cli.Flag{
+					&cli.StringFlag{Name: "device", Aliases: []string{"d"}},
+					&cli.StringFlag{Name: "file", Aliases: []string{"f"}},
+				},
+			},
+			{
+				Name:    "graph",
+				Aliases: []string{"g"},
+				Usage:   "create th egraph in syncthing-map.html",
+				Action: func(cCtx *cli.Context) error {
+					writeGraph()
+					return nil
+				},
+			},
+			{
+				Name:    "clean",
+				Aliases: []string{"c"},
+				Usage:   "remove working files (data.json, syncthing-map.html)",
+				Action: func(cCtx *cli.Context) error {
+					return nil
+				},
+			},
+		},
+	}
+
+	if err := app.Run(os.Args); err != nil {
+		log.Fatal().Msgf("error running the application: %v", err)
 	}
 }
