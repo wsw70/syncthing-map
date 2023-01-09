@@ -15,9 +15,18 @@ Run the following command repetedely for each `config.xml` you have access to ([
 
     syncthing-map add --device <name of the device you took the config.xml from> --file <copied config.xml, possibly renamed>
 
-This will initially create, then update a `data.json` file that gathers relevant information about each of the devices and its folders. The more you run, the better your map will be - otherwise you will see that you are sharing fildes with a crazily named thing (this is the ID of the remote device).
+An example of what you should see (with two devices/configs) is
 
-When you are done, run
+```text
+PS D:\syncthing-map> .\syncthing-map.exe add --device srv --file config-srv.xml
+{"level":"info","time":"2023-01-09T19:46:02+01:00","message":"wrote data.json file"}
+PS D:\syncthing-map> .\syncthing-map.exe add --device router --file config-router.xml
+{"level":"info","time":"2023-01-09T19:46:16+01:00","message":"wrote data.json file"}
+```
+
+This added (or updated) two devices to the database file. This file (`data.json`) will be initially created if absent, then updated with each `add` command. It gathers relevant information about each of the devices and its folders. The more you run `syncthing-map add`, the better your map will be - otherwise you will see that you are sharing fildes with a crazily named thing (this is the ID of the remote device).
+
+When you are done with adding devices/configurations, run
 
     syncthing-map graph
 
