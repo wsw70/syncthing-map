@@ -13,7 +13,7 @@ However, taken that the utility only reads a file and writes one or two the disa
 
 Run the following command repetedely for each `config.xml` you have access to ([how to find it](https://docs.syncthing.net/users/config.html))
 
-    syncthing-map read --device <name of the device you took the config.xml from> --file <copied config.xml, possibly renamed>
+    syncthing-map add --device <name of the device you took the config.xml from> --file <copied config.xml, possibly renamed>
 
 This will initially create, then update a `data.json` file that gathers relevant information about each of the devices and its folders. The more you run, the better your map will be - otherwise you will see that you are sharing fildes with a crazily named thing (this is the ID of the remote device).
 
