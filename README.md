@@ -1,6 +1,8 @@
 # syncthing-map
 
-A utility to map syncthing devices and shared folders
+A utility to map syncthing devices and shared folders.
+
+The binaries are automatically released at each update of the stable and development version. Use the stable one except if you want to test some development updates.
 
 ## Usage
 
@@ -48,9 +50,6 @@ It may be that on that this unprocessed device has given itself another name. We
 ## TODO
 
 - a service to provide always up-to-date graphs
-- a CI/CD workflow (GitHib Actions) to magically build plenty of executables and whatnot
-- add credits in the generated file
-
 
 ## What next?
 
