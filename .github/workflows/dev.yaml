@@ -1,0 +1,30 @@
+name: build development version
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  release-linux-amd64:
+    name: release linux/amd64
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1.34
+        with:
+          github_token: ${{ secrets.REPO_TOKEN }}
+          goos: linux
+          goarch: amd64
+          compress_assets: OFF
+          overwrite: TRUE
+  release-windows-amd64:
+    name: release linux/amd64
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1.34
+        with:
+          github_token: ${{ secrets.REPO_TOKEN }}
+          goos: windows
+          goarch: amd64
+          compress_assets: OFF
+          overwrite: TRUE
