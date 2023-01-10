@@ -2,13 +2,6 @@
 
 A utility to map syncthing devices and shared folders
 
-## 🛑 WARNING
-
-This is the **very first tentative draft** of the utility. Now, I said it.
-
-This means that terrible things can happen if you use it, the list is too long to put it there.  
-However, taken that the utility only reads a file and writes one or two the disaster should be contained. It works for me so far.
-
 ## Usage
 
 Run the following command repetedely for each `config.xml` you have access to ([how to find it](https://docs.syncthing.net/users/config.html))
