@@ -7,10 +7,6 @@ import (
 	"os"
 	"strings"
 	"text/template"
-	"time"
-
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 )
 
 // embed HTML template
@@ -18,12 +14,6 @@ var (
 	//go:embed syncthing-map-template.html
 	templateContents []byte
 )
-
-// TODO setup logging
-func init() {
-	output := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339}
-	zerolog.New(output).With().Timestamp().Logger()
-}
 
 func writeGraph() {
 	var err error

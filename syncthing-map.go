@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"os"
+	"strings"
 	"time"
 
-	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog"
 	"github.com/urfave/cli/v2"
 )
 
@@ -39,6 +41,20 @@ func readFile(filename string) (content []byte, err error) {
 	}
 	handler.Close()
 	return content, nil
+}
+
+var log zerolog.Logger
+
+func init() {
+	output := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339}
+	output.FormatLevel = func(i interface{}) string {
+		return strings.ToUpper(fmt.Sprintf("%s", i))
+	}
+	output.FormatMessage = func(i interface{}) string {
+		return fmt.Sprintf("%s", i)
+	}
+
+	log = zerolog.New(output).With().Timestamp().Logger()
 }
 
 func main() {

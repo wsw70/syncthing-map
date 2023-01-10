@@ -5,8 +5,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"os"
-
-	"github.com/rs/zerolog/log"
 )
 
 // readConfigXML takes the hostname and config file and dumps a data.json representation for further use
