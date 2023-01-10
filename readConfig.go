@@ -41,32 +41,29 @@ func readConfigXml(hostname string, configFile string) {
 	writeConfigToFile(fmt.Sprintf("%s %s", hostname, localDeviceId), config)
 }
 
-// format of data of data.json
-const dataFile = "data.json"
-
 func writeConfigToFile(deviceKey string, config Configuration) {
 	var err error
 
 	dataToWrite := make(dataJsonT)
-	data, err := readFile(dataFile)
+	data, err := readFile(dataFilename)
 	if err != nil {
 		// no data file, create new one
-		log.Info().Msgf("no %s file", dataFile)
+		log.Info().Msgf("no %s file", dataFilename)
 	} else {
 		// unmarshall content and update with new config
 		err = json.Unmarshal(data, &dataToWrite)
 		if err != nil {
-			log.Fatal().Msgf("cannot unmarshal %s: %s", dataFile, err)
+			log.Fatal().Msgf("cannot unmarshal %s: %s", dataFilename, err)
 		}
 	}
 	dataToWrite[deviceKey] = config.Folder
 	dataToWriteJson, err := json.Marshal(dataToWrite)
 	if err != nil {
-		log.Fatal().Msgf("cannot marshal data for %s: %s", dataFile, err)
+		log.Fatal().Msgf("cannot marshal data for %s: %s", dataFilename, err)
 	}
-	err = os.WriteFile(dataFile, dataToWriteJson, 0644)
+	err = os.WriteFile(dataFilename, dataToWriteJson, 0644)
 	if err != nil {
-		log.Fatal().Msgf("cannot write %s: %s", dataFile, err)
+		log.Fatal().Msgf("cannot write %s: %s", dataFilename, err)
 	}
-	log.Info().Msgf("wrote data.json file")
+	log.Info().Msgf("wrote %s file", dataFilename)
 }

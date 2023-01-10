@@ -43,6 +43,10 @@ func readFile(filename string) (content []byte, err error) {
 	return content, nil
 }
 
+// global setting for data files
+const dataFilename = "data.json"
+const outputFilename = "syncthing-map.html"
+
 var log zerolog.Logger
 
 func init() {

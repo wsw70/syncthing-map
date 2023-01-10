@@ -20,13 +20,13 @@ func writeGraph() {
 	var data dataJsonT
 	var mermaidCode []string
 
-	dataBytes, err := readFile("data.json")
+	dataBytes, err := readFile(dataFilename)
 	if err != nil {
-		log.Fatal().Msgf("cannot read data.json file: %s", err)
+		log.Fatal().Msgf("cannot read %s file: %s", dataFilename, err)
 	}
 	err = json.Unmarshal(dataBytes, &data)
 	if err != nil {
-		log.Fatal().Msgf("cannot unmarshal data.json file: %s", err)
+		log.Fatal().Msgf("cannot unmarshal %s file: %s", dataFilename, err)
 	}
 
 	// build mermaid.js code
@@ -64,14 +64,14 @@ func writeGraph() {
 		log.Fatal().Msgf("parse template syncthing-map-template.html: %s", err)
 	}
 	// var output io.Writer
-	f, err := os.Create("syncthing-map.html")
+	f, err := os.Create(outputFilename)
 	if err != nil {
-		log.Fatal().Msgf("cannot create syncthing-map.html: %s", err)
+		log.Fatal().Msgf("cannot create %s: %s", outputFilename, err)
 	}
 	err = template.Execute(f, strings.Join(mermaidCode, "\n"))
 	if err != nil {
-		log.Fatal().Msgf("cannot populate syncthing-map.html with template: %s", err)
+		log.Fatal().Msgf("cannot populate %s with template: %s", outputFilename, err)
 	}
 	f.Close()
-	log.Info().Msg("wrote syncthing-map.html")
+	log.Info().Msgf("wrote %s", outputFilename)
 }
