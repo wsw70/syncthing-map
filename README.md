@@ -54,11 +54,10 @@ It may be that on that this unprocessed device has given itself another name. We
 
 ## TODO
 
-- a better README and examples
-- the cleanup function does not exist yet
+- a service to provide always up-to-date graphs
 - a CI/CD workflow (GitHib Actions) to magically build plenty of executables and whatnot
 - add credits in the generated file
-- other things I forgot
+
 
 ## What next?
 
