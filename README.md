@@ -70,7 +70,9 @@ Make sure that `device` has the same as the one defined on the device which conf
 
 The natural way to share the configurations is though Syncthing itself! You will typically choose a machine on which you will run `syncthing-map` in server mode and share with it configurations from other devices.
 
-In the example above, the machine `my-latop` reads its own configuration (this is a Windows 10) and receives from `srv` and `galaxy-s22` configurations it stores in `D:\syncthing-configuration`. Cool, right?
+In the example above, the machine `my-laptop` reads its own configuration (this is a Windows 10) and receives from `srv` and `galaxy-s22` configurations it stores in `D:\syncthing-configuration`. Cool, right?
+
+Out of abundance of caution :) it is recommended to share the configuration in a "send only" mode. Just in case.
 
 #### Running the server
 
@@ -83,10 +85,6 @@ If you launch [`http://localhost:3000`](http://localhost:3000) in a browser, you
 You can edit `syncthing-map-server.yaml` on the fly - each call to the server reads this config file.
 
 Finally, each call also creates `syncthing-map-server.html`, an offline version of the map (this is what is actually sent back by the server).
-
-## TODO
-
-- a service to provide always up-to-date graphs
 
 ## What next?
 
