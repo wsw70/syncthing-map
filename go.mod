@@ -3,8 +3,10 @@ module syncthing-map
 go 1.19
 
 require (
+	github.com/go-chi/chi/v5 v5.0.8
 	github.com/rs/zerolog v1.28.0
 	github.com/urfave/cli/v2 v2.23.7
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (

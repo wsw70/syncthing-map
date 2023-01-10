@@ -5,3 +5,6 @@ data.json
 syncthing-map.html
 syncthing-map
 syncthing-map.exe
+syncthing-map-server.html
+syncthing-map-server.yaml
+data-server.json
