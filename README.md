@@ -88,6 +88,11 @@ Finally, each call also creates `syncthing-map-server.html`, an offline version 
 
 ## What next?
 
+- better graph chart, not static, that would allow to maybe filter hosts and move them around.
+- unlikely: I will write the above myself based on d3 or something like that
+
+## Conclusion
+
 This is a hobby project done follwong some [discussions on the Synthing forum](https://forum.syncthing.net/t/how-to-graph-my-clients/19554).
 
 Feel free to open Issues if you find bugs, or start Discussions.
