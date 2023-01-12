@@ -8,7 +8,7 @@ import (
 )
 
 // readConfigXML takes the hostname and config file and dumps a data.json representation for further use
-func readConfigXml(hostname string, configFile string) {
+func readConfigXml(hostname string, configFile string, dataFilename string) {
 	var err error
 	var localDeviceId string
 
@@ -38,10 +38,10 @@ func readConfigXml(hostname string, configFile string) {
 		}
 	}
 
-	writeConfigToFile(fmt.Sprintf("%s %s", hostname, localDeviceId), config)
+	writeConfigToFile(fmt.Sprintf("%s %s", hostname, localDeviceId), config, dataFilename)
 }
 
-func writeConfigToFile(deviceKey string, config Configuration) {
+func writeConfigToFile(deviceKey string, config Configuration, dataFilename string) {
 	var err error
 
 	dataToWrite := make(dataJsonT)

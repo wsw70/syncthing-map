@@ -15,7 +15,7 @@ var (
 	templateContents []byte
 )
 
-func writeGraph() {
+func writeGraph(dataFilename string, outputFilename string) {
 	var err error
 	var data dataJsonT
 	var mermaidCode []string

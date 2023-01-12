@@ -43,10 +43,6 @@ func readFile(filename string) (content []byte, err error) {
 	return content, nil
 }
 
-// global setting for data files
-const dataFilename = "data.json"
-const outputFilename = "syncthing-map.html"
-
 var log zerolog.Logger
 
 func init() {
@@ -83,7 +79,7 @@ func main() {
 					if cCtx.String("device") == "" || cCtx.String("file") == "" {
 						cli.ShowAppHelpAndExit(cCtx, 1)
 					}
-					readConfigXml(cCtx.String("device"), cCtx.String("file"))
+					readConfigXml(cCtx.String("device"), cCtx.String("file"), "data-cli.json")
 					return nil
 				},
 				Flags: []cli.Flag{
@@ -96,7 +92,7 @@ func main() {
 				Aliases: []string{"g"},
 				Usage:   "create th egraph in syncthing-map.html",
 				Action: func(cCtx *cli.Context) error {
-					writeGraph()
+					writeGraph("data.json", "syncthing-map-cli.html")
 					return nil
 				},
 			},
@@ -105,6 +101,15 @@ func main() {
 				Aliases: []string{"c"},
 				Usage:   "remove working files (data.json, syncthing-map.html)",
 				Action: func(cCtx *cli.Context) error {
+					return nil
+				},
+			},
+			{
+				Name:    "server",
+				Aliases: []string{"s"},
+				Usage:   "HTTP server to automatically generate a map",
+				Action: func(cCtx *cli.Context) error {
+					httpServer()
 					return nil
 				},
 			},
