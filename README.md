@@ -31,6 +31,20 @@ In the example above, the machine `my-laptop` reads its own configuration (this 
 
 Out of abundance of caution :) it is recommended to share the configuration in a "send only" mode. Just in case.
 
+It is also recommended to use the `.stignore` file to ignore some ever-chnaging files (database, logs, ...). I use
+
+```
+syncthing*
+index*
+index**
+```
+
+##### Where to find the config files
+
+Most systems configurations are mentioned in the [documentation](https://docs.syncthing.net/users/config.html).
+
+For Android you must manually input `/data/data/com.nutomic.syncthingandroid/files` as the folder.
+
 #### Running the server
 
 ```text
