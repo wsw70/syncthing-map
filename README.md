@@ -2,7 +2,7 @@
 
 A utility to map syncthing devices and shared folders.
 
-The binaries are automatically released at each update of the stable and development version. Use the stable one except if you want to test some development updates.
+The binaries are automatically released at each update of the stable and development (has `dev` in the version name) version. Use the stable one except if you want to test some development updates.
 
 ## Usage
 
