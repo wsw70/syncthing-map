@@ -6,6 +6,20 @@ The binaries are automatically released at each update of the stable and develop
 
 ## Usage
 
+`syncthing-map` relies on the configuration file (`config.xml`) of a device running Syncthing to build a map of relations between folders and devices that they are shared with.
+
+There are currently two ways to provide these configuration files:
+
+- **Manual**: you need to retrieve from the device you want to map its `config.xml` file manually. It leans copying it via `scp`, a Windows share or whatever you use to move files between your devices. Once you have this file locally, you run the appropriate command to add it to the "database of processed devices" (see the "Manual" section for details). You need to repeat this operation for each device (and its `confix.xml` file)
+
+- **Automated**: since retrieving configuration failes each tile something changes is burdensome, you can automate the process by
+  - sharing with Syncthing the configuration folder of a device (to one chosen device)
+  - updating a file (`syncthing-map-server.yaml`) on that chosen device with that information
+  - starting on that one chosen device `syncthing-map` in a server mode: this will start a web server you can connect to to see your map  
+  The obvious advantage is that whenever you change something in any of the devices, it is automatically reflected in the map you get via the web server
+
+It is probably a good idea to map one or two devices manually first to get an idea of how the map looks like (and if you like it 🤨) before jumping into the Automated mode.
+
 ### Automated (way cooler, requires to share the configurations)
 
 This mode allows to request via HTTP an map of the connections, created on the fly.
@@ -33,7 +47,7 @@ Out of abundance of caution :) it is recommended to share the configuration in a
 
 It is also recommended to use the `.stignore` file to ignore some ever-chnaging files (database, logs, ...). I use
 
-```
+```text
 syncthing*
 index*
 index**
@@ -61,7 +75,9 @@ Finally, each call also creates `syncthing-map-server.html`, an offline version 
 
 Run the following command repetedely for each `config.xml` you have access to ([how to find it](https://docs.syncthing.net/users/config.html))
 
-    syncthing-map add --device <name of the device you took the config.xml from> --file <copied config.xml, possibly renamed>
+```text
+syncthing-map add --device <name of the device you took the config.xml from> --file <copied config.xml, possibly renamed>
+```
 
 An example of what you should see (with two devices/configs) is
 
@@ -76,7 +92,9 @@ This added (or updated) two devices to the database file. This file (`data.json`
 
 When you are done with adding devices/configurations, run
 
-    syncthing-map graph
+```text
+syncthing-map graph
+```
 
 This will create `syncthing-map.html` that you can open with a browser. If everything went well, you should see a comprehensive map of your devices and their folders.
 
