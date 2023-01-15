@@ -90,9 +90,9 @@ func main() {
 			{
 				Name:    "graph",
 				Aliases: []string{"g"},
-				Usage:   "create th egraph in syncthing-map.html",
+				Usage:   "create the graph in syncthing-map.html",
 				Action: func(cCtx *cli.Context) error {
-					writeGraph("data.json", "syncthing-map-cli.html")
+					writeGraph("data-cli.json", "syncthing-map-cli.html")
 					return nil
 				},
 			},

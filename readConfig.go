@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-// readConfigXML takes the hostname and config file and dumps a data.json representation for further use
+// readConfigXML takes the hostname and config file and dumps a data-cli.json representation for further use
 func readConfigXml(hostname string, configFile string, dataFilename string) {
 	var err error
 	var localDeviceId string
