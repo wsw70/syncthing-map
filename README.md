@@ -118,6 +118,10 @@ This means that `Michael Cours` shared by a device (the name is not visible) is 
 
 It may be that on that this unprocessed device has given itself another name. We will not know until its `config.xml` file is processed.
 
+### Clean up
+
+`syncthing-map graph` will remove the `.json` and `.html` files so that you can start from scratch.
+
 ## What next?
 
 - better graph chart, not static, that would allow to maybe filter hosts and move them around.

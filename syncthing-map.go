@@ -99,8 +99,17 @@ func main() {
 			{
 				Name:    "clean",
 				Aliases: []string{"c"},
-				Usage:   "remove working files (data.json, syncthing-map.html)",
+				Usage:   "remove working files (*.json, *.html)",
 				Action: func(cCtx *cli.Context) error {
+					filesToRemove := []string{
+						"syncthing-map-cli.html",
+						"syncthing-map-server.html",
+						"data-cli.json",
+						"data-server.json",
+					}
+					for _, file := range filesToRemove {
+						os.Remove(file)
+					}
 					return nil
 				},
 			},
