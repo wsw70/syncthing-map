@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	_ "embed"
 	"encoding/json"
 	"fmt"
@@ -30,18 +31,16 @@ func writeGraph(dataFilename string, outputFilename string) {
 	}
 
 	// build mermaid.js code
-	// FIXME because of a problem with mermaid.js, all destinations are prefixed with X or x to start with a letter
 	mermaidCode = append(mermaidCode, "flowchart LR")
 	// get every registered device
 	for deviceKey, folders := range data {
 		localDeviceName := strings.Split(deviceKey, " ")[0]
 		localDeviceId := strings.Split(deviceKey, " ")[1]
-		// FIXME append folder name with device so that they are linked in the graph
 		for i := range folders {
-			folders[i].ID = fmt.Sprintf("X%s+%s", folders[i].ID, localDeviceId)
+			folders[i].ID = hashData([]string{folders[i].ID, localDeviceId})
 		}
 		// container for the device
-		mermaidCode = append(mermaidCode, fmt.Sprintf("subgraph x%s[\"%s\"]", localDeviceId, localDeviceName))
+		mermaidCode = append(mermaidCode, fmt.Sprintf("subgraph %s[\"%s\"]", hashData([]string{localDeviceId}), localDeviceName))
 		for _, folder := range folders {
 			mermaidCode = append(mermaidCode, fmt.Sprintf("%s[\"%s\"]", folder.ID, folder.Label))
 		}
@@ -74,4 +73,9 @@ func writeGraph(dataFilename string, outputFilename string) {
 	}
 	f.Close()
 	log.Info().Msgf("wrote %s", outputFilename)
+}
+
+func hashData(data []string) string {
+	hsha2 := sha256.Sum256([]byte(strings.Join(data, " ")))
+	return fmt.Sprintf("X%x", hsha2)
 }
