@@ -40,7 +40,7 @@ func writeGraph(dataFilename string, outputFilename string) {
 			folders[i].ID = hashData([]string{folders[i].ID, localDeviceId})
 		}
 		// container for the device
-		mermaidCode = append(mermaidCode, fmt.Sprintf("subgraph %s[\"%s\"]", hashData([]string{localDeviceId}), localDeviceName))
+		mermaidCode = append(mermaidCode, fmt.Sprintf("subgraph x%s[\"%s\"]", localDeviceId, localDeviceName))
 		for _, folder := range folders {
 			mermaidCode = append(mermaidCode, fmt.Sprintf("%s[\"%s\"]", folder.ID, folder.Label))
 		}
