@@ -5,6 +5,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"os"
+	"strings"
 )
 
 // readConfigXML takes the hostname and config file and dumps a data-cli.json representation for further use
@@ -34,8 +35,15 @@ func readConfigXml(hostname string, configFile string, dataFilename string) {
 				if hostname == knownDevice.Name {
 					localDeviceId = knownDevice.ID
 				}
+				// try to see if the names match without case
+				if strings.EqualFold(hostname, knownDevice.Name) {
+					log.Warn().Msgf("provided device name %s matches %s caseless", hostname, knownDevice.Name)
+				}
 			}
 		}
+	}
+	if localDeviceId == "" {
+		log.Fatal().Msgf("could not match the provided device name %s with known devices in the config file. Check for a warning above if this is not just a matter of case", hostname)
 	}
 
 	writeConfigToFile(fmt.Sprintf("%s %s", hostname, localDeviceId), config, dataFilename)
