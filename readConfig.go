@@ -5,7 +5,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"os"
-	"strings"
+
+	mapset "github.com/deckarep/golang-set/v2"
 )
 
 // readConfigXML takes the hostname and config file and dumps a data-cli.json representation for further use
@@ -23,6 +24,7 @@ func readConfigXml(hostname string, configFile string, dataFilename string) {
 		log.Fatal().Msgf("cannot unmarshall config.xml: %v", err)
 	}
 	// update the devices names in folders
+	devicesFound := mapset.NewSet[string]() // unique set of devices found in the folders
 	for _, folder := range config.Folder {
 		for i, device := range folder.Device {
 			// find the appropraite device name
@@ -35,15 +37,12 @@ func readConfigXml(hostname string, configFile string, dataFilename string) {
 				if hostname == knownDevice.Name {
 					localDeviceId = knownDevice.ID
 				}
-				// try to see if the names match without case
-				if strings.EqualFold(hostname, knownDevice.Name) {
-					log.Warn().Msgf("provided device name %s matches %s caseless", hostname, knownDevice.Name)
-				}
+				devicesFound.Add(knownDevice.Name)
 			}
 		}
 	}
 	if localDeviceId == "" {
-		log.Fatal().Msgf("could not match the provided device name %s with known devices in the config file. Check for a warning above if this is not just a matter of case", hostname)
+		log.Fatal().Msgf("could not match the provided device name %s with known devices in the config file. Found device names: %v", hostname, devicesFound)
 	}
 
 	writeConfigToFile(fmt.Sprintf("%s %s", hostname, localDeviceId), config, dataFilename)

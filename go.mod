@@ -3,6 +3,7 @@ module syncthing-map
 go 1.19
 
 require (
+	github.com/deckarep/golang-set/v2 v2.1.0
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/rs/zerolog v1.28.0
 	github.com/urfave/cli/v2 v2.23.7
