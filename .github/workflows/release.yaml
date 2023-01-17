@@ -18,8 +18,8 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version-file: "go.mod"
-      - run: env GOOS=linux GOARCH=amd64 go build -o syncthing-map-linux-amd64 .
-      - run: env GOOS=windows GOARCH=amd64 go build -o syncthing-map-windows-amd64.exe .
+      - run: env GOOS=linux GOARCH=amd64 go build -ldflags "-X main.compiledVersion=${{ GITHUB.REF_NAME }}" -o syncthing-map-linux-amd64 .
+      - run: env GOOS=windows GOARCH=amd64 go build -ldflags "-X main.compiledVersion=${{ GITHUB.REF_NAME }}" -o syncthing-map-windows-amd64.exe .
 
       - name: release
         uses: softprops/action-gh-release@v1

@@ -4,12 +4,16 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime"
 	"strings"
 	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/urfave/cli/v2"
 )
+
+// version will be added from tag during compilation
+var compiledVersion string
 
 type Device struct {
 	ID   string `xml:"id,attr" json:"id"`
@@ -58,18 +62,24 @@ func init() {
 }
 
 func main() {
+	if compiledVersion == "" {
+		log.Error().Msgf("compiledVersion not set at compile time")
+		compiledVersion = "(missing from compilation)"
+	}
 
 	app := &cli.App{
-		Name:     "syncthing-map",
-		Version:  "alpha",
-		Compiled: time.Now(),
+		Name:    "syncthing-map",
+		Usage:   "Syncthing devices and shared folders mapped in your browser",
+		Version: fmt.Sprintf("%s %s/%s", compiledVersion, runtime.GOOS, runtime.GOARCH),
 		Authors: []*cli.Author{
 			{
 				Name:  "wsw70",
 				Email: "1345886+wsw70@users.noreply.github.com",
 			},
 		},
-		Copyright: "WTFPL http://www.wtfpl.net/",
+		Copyright: "WTFPL (http://www.wtfpl.net)",
+		HideHelp:  true,
+		UsageText: "syncthing-map clean\nsyncthing-map add --device <device name> --file <configuration file> | graph\nsyncthing-map server",
 		Commands: []*cli.Command{
 			{
 				Name:    "add",
