@@ -120,7 +120,7 @@ It may be that on that this unprocessed device has given itself another name. We
 
 ### Clean up
 
-`syncthing-map graph` will remove the `.json` and `.html` files so that you can start from scratch.
+`syncthing-map clean` will remove the `.json` and `.html` files so that you can start from scratch.
 
 ## What next?
 
